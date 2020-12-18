@@ -167,37 +167,10 @@ public class ClaimVoucherBizImpl implements ClaimVoucherBiz {
             dealRecord.setDealResult(Contant.CLAIMVOCHER_UNPASSED);
         }else if(dealRecord.getDealWay().equals(Contant.DEAL_PAID)){//打款
             claimVoucher.setStatus(Contant.CLAIMVOCHER_PAID);
-
+            employee.setYearTotal(employee.getYearTotal()+claimVoucher.getTotalAmount());//年度报销总金额更新
+            employeeDao.update(employee);//更新数据库
             dealRecord.setDealResult(Contant.CLAIMVOCHER_PAID);
         }
-//        if (dealRecord.getDealWay().equals(Contant.DEAL_PASS)){
-//            if(claimVoucher.getTotalAmount() <=  Contant.LIMIT_CHECK || employee.getPost().equals(Contant.POST_GM) ) {
-//                claimVoucher.setStatus(Contant.CLAIMVOCHER_APPROVED);
-//                claimVoucher.setNextDealSn(employeeDao.selectByDepartmentAndPost(null, Contant.POST_CAHIER).get(0).getSn());
-//
-//                dealRecord.setDealResult(Contant.CLAIMVOCHER_APPROVED);
-//            }else {
-//                claimVoucher.setStatus(Contant.CLAIMVOCHER_RECHECK);
-//                claimVoucher.setNextDealSn(employeeDao.selectByDepartmentAndPost(null, Contant.POST_GM).get(0).getSn());
-//
-//                dealRecord.setDealResult(Contant.CLAIMVOCHER_APPROVED);
-//            }
-//        }else if (dealRecord.getDealWay().equals(Contant.DEAL_BACK)){
-//            claimVoucher.setStatus(Contant.CLAIMVOCHER_BACK);
-//            claimVoucher.setNextDealSn(claimVoucher.getCreateSn());
-//
-//            dealRecord.setDealResult(Contant.CLAIMVOCHER_BACK);
-//        }else if (dealRecord.getDealWay().equals(Contant.DEAL_REJECT)){
-//            claimVoucher.setStatus(Contant.CLAIMVOCHER_TERMINATED);
-//            claimVoucher.setNextDealSn(null);
-//
-//            dealRecord.setDealResult(Contant.CLAIMVOCHER_TERMINATED);
-//        }else if (dealRecord.getDealWay().equals(Contant.DEAL_PAID)){
-//            claimVoucher.setStatus(Contant.CLAIMVOCHER_PAID);
-//            claimVoucher.setNextDealSn(null);
-//
-//            dealRecord.setDealResult(Contant.CLAIMVOCHER_PAID);
-//        }
 
         claimVoucherDao.update(claimVoucher);
         dealRecordDao.insert(dealRecord);

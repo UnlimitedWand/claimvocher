@@ -1,6 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.cmj.oa.global.Contant" %>
+<%@ page import="com.cmj.oa.global.Contant" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="top.jsp"/>
 <!--添加 layui  支持加载-->
@@ -8,6 +8,7 @@
 <script src="/static/layui-v2.4.5/layui/layui.js" charset="UTF-8"></script>
 
 <script type="text/javascript" src="/javascript/click.js"></script>
+
 
 <section id="content" class="table-layout animated fadeIn">
     <div class="tray tray-center">
@@ -163,5 +164,6 @@
         </div>
     </div>
 </section>
+
 
 <jsp:include page="bottom.jsp"/>

@@ -16,6 +16,7 @@
             }
 
             var post = "${sessionScope.employee.post}".toString();
+            console.log(post);
             // if (post!="系统管理员" && post!="部门经理"){
             //     var p = document.getElementsByName("power");
             //     for (var i = 0 ; i < p.length ; i++){
@@ -27,16 +28,28 @@
             // }
 
             if (post!="系统管理员"){
+                console.log(post);
                 var p = document.getElementsByName("power");
                 for (var i = 0 ; i < p.length ; i++){
                     p[i].style.display="none";
                 }
             }
-            if (post!="报销人员"){
+            if(post=="收单员"||post=="系统管理员"){
+                var p = document.getElementsByName("dealing");
+                for (var i = 0 ; i < p.length ; i++){
+                    p[i].style.display="none";
+                }
+            }
+            if (post=="审核人员"||post=="审核负责人"){
+                console.log(post);
                 var p = document.getElementsByName("dealing");
                 for (var i = 1 ; i < p.length ; i++){
                     p[i].style.display="none";
                 }
+            }
+            if (post!="收单员"){
+                console.log(post);
+                document.getElementsByName("receive")[0].style.display="none";
             }
             // if (post =="收单员"){
             //     var p = document.getElementsByName("dealing");
@@ -113,6 +126,12 @@
             </header>
             <ul class="nav sidebar-menu">
                 <li class="sidebar-label pt20">日常管理</li>
+                <li name="receive">
+                    <a href="/claim_voucher/receive">
+                        <span class="glyphicon glyphicon-book"></span>
+                        <span class="sidebar-title">收单</span>
+                    </a>
+                </li>
                 <li name="dealing">
                     <a href="/claim_voucher/deal">
                         <span class="glyphicon glyphicon-book"></span>
@@ -163,6 +182,27 @@
                         <li>
                             <a href="/department/to_add">
                                 <span class="glyphicon glyphicon-check"></span> 添加部门 </a>
+                        </li>
+                    </ul>
+                </li>
+                <li name="power">
+                    <a class="accordion-toggle" href="#">
+                        <span class="fa fa-pie-chart"></span>
+                        <span class="sidebar-title">统计分析</span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="nav sub-nav">
+                        <li>
+                            <a href="/data_archiving/to_add">
+                                <span class="glyphicon glyphicon-calendar"></span> 人员类型统计 </a>
+                        </li>
+                        <li>
+                            <a href="/data_archiving/echarts">
+                                <span class="glyphicon glyphicon-check"></span> 性别统计 </a>
+                        </li>
+                        <li>
+                            <a href="/data_archiving/time">
+                                <span class="glyphicon glyphicon-time"></span> 报销时间段分析 </a>
                         </li>
                     </ul>
                 </li>

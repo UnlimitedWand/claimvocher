@@ -12,5 +12,5 @@
 <%--</html>--%>
 
 <%
-    request.getRequestDispatcher("./WEB-INF/pages/login.jsp").forward(request,response);
+    request.getRequestDispatcher("./WEB-INF/pages/login1.jsp").forward(request,response);
 %>

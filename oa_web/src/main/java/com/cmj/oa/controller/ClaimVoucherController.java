@@ -21,9 +21,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,9 +40,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.*;
 
-import static com.sun.webkit.perf.WCGraphicsPerfLogger.log;
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
-
 @Controller("claimVoucherController")
 @RequestMapping("/claim_voucher")
 public class ClaimVoucherController {
@@ -54,6 +49,13 @@ public class ClaimVoucherController {
 
     @Autowired
     private EmployeeBiz employeeBiz;
+
+
+    @RequestMapping("/receive")
+    public String scan_qrcode(){
+
+        return "receive_voucher";
+    }
 
     @RequestMapping("/getImg")
     public void getImg(String imgname,HttpServletRequest request, HttpServletResponse response)

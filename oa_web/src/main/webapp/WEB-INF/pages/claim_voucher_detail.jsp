@@ -1,9 +1,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.cmj.oa.global.Contant" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <jsp:include page="top.jsp"/>
+<script type="text/javascript" src="/javascript/jquery.min.js"></script>
+<script type="text/javascript" src="/javascript/generate_qrcode.js"></script>
 
 <section id="content" class="table-layout animated fadeIn">
     <div class="tray tray-center">
@@ -31,10 +33,13 @@
                             </div>
                         </div>
                         <div class=" col-md-3">
+<%--                            <div id="qrcode" style="width:100px; height:100px; margin-top:15px;" onload="makeCode()"></div>--%>
                             <%--这里有二维码 需要引用服务器的生成二维码的服务--%>
                             <c:if test="${sessionScope.employee.post==Contant.POST_STAFF}">
-                                <c:if test="${claimVoucher.status==CLAIMVOCHER_PASSED || claimVoucher.status==CLAIMVOCHER_PAID }">
-                                    <img src="..." alt="..." class="img-rounded">
+<%--                                <div id="qrcode" style="width:100px; height:100px; margin-top:15px;" onload="makeCode()"></div>--%>
+                                <c:if test="${claimVoucher.status==Contant.CLAIMVOCHER_PASSED || claimVoucher.status==Contant.CLAIMVOCHER_PAID}">
+                                    <div id="qrcode" style="width:100px; height:100px; margin-top:15px;"></div>
+<%--                                    <img src="..."></img>--%>
                                 </c:if>
                             </c:if>
 
@@ -136,6 +141,7 @@
                     <div class="section row">
                         <div class="col-md-1"></div>
                         <div class="col-md-5">总金额：<span>${claimVoucher.totalAmount}</span></div>
+                        <div class="col-md-4">可报销金额：<span id="yourMoney"></span></div>
                     </div>
                     <div class="section-divider mt20 mb40">
                         <span> 处理流程 </span>
@@ -157,5 +163,51 @@
         </div>
     </div>
 </section>
+<script>
+    function makeCode () {
+        //var elText = document.getElementById("text");
+        if(document.getElementById("qrcode")!=null){
+            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                width : 100,
+                height : 100
+            });
+            var elText ="/claim_voucher/to_check?id="+${claimVoucher.id};
+            console.log(${claimVoucher.id});
+            console.log("${sessionScope.employee.post}");
+            console.log("${claimVoucher.status}");
+            qrcode.makeCode(elText);
+        }
+    }
+    <%--function calculateYourMoney() {--%>
+    <%--    var p = document.getElementById("yourMoney");--%>
+    <%--    var yearTotal = ${sessionScope.employee.yearTotal};--%>
+    <%--    var yourMoney = 0;--%>
+    <%--    for( let index in ${items}){--%>
+    <%--        var amount = ${items}[index].amount;--%>
+    <%--        switch(${items}[index].item){--%>
+    <%--            case "学生":--%>
+    <%--            case "在职人员":--%>
+    <%--            case "特殊人员":--%>
+    <%--                if(yearTotal >= 1300){--%>
+    <%--                    yourMoney += amount*0.9;--%>
+    <%--                }else--%>
+    <%--                    yourMoney += amount*0.8;--%>
+    <%--                break;--%>
+    <%--            case "退休人员":--%>
+    <%--                if(yearTotal >= 1300){--%>
+    <%--                    yourMoney += amount;--%>
+    <%--                }else--%>
+    <%--                    yourMoney += amount*0.9;--%>
+    <%--                break;--%>
+    <%--            case "离休人员":--%>
+    <%--                yourMoney += amount*0.9;--%>
+    <%--                break;--%>
+    <%--        }--%>
+    <%--    }--%>
+    <%--    p.appendChild("<div>"+yourMoney+"</div>");--%>
+    <%--}--%>
 
+    makeCode();
+    // calculateYourMoney();
+</script>
 <jsp:include page="bottom.jsp"/>
